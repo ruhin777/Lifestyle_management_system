@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # use this for MariaDB/MySQL
-        'NAME': 'lms project',        # your phpMyAdmin database name
+        'NAME': 'lifestyle_management',        # your phpMyAdmin database name
         'USER': 'root',      # your db username
         'PASSWORD': '',  # your db password
         'HOST': '127.0.0.1',   # or 'localhost'
