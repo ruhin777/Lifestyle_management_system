@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Food Search · Lifestyle System{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h1>🔍 Search Food's Nutrition</h1>
+    <p class="lead">Find nutrition details by entering a food name below.</p>
+
+    <form method="get" action="">
+      <div class="row single">
+        <div>
+          <label for="food-search">Food Name</label>
+          <input type="text" id="food-search" name="q" placeholder="Enter food name" value="{{ query }}">
+        </div>
+      </div>
+      <div style="margin-top:18px">
+        <button class="btn" type="submit">Search</button>
+      </div>
+    </form>
+
+    {% if results %}
+      <div style="overflow-x:auto; margin-top:24px;">
+        <table style="width:100%; border-collapse:collapse; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);">
+          <thead>
+            <tr style="background:linear-gradient(90deg,var(--green-700),var(--green-500)); color:white;">
+              <th style="padding:12px; text-align:left;">Food</th>
+              <th style="padding:12px; text-align:center;">Calories (kcal/100g)</th>
+              <th style="padding:12px; text-align:center;">Protein (g/100g)</th>
+              <th style="padding:12px; text-align:center;">Fat (g/100g)</th>
+              <th style="padding:12px; text-align:center;">Carbs (g/100g)</th>
+              <th style="padding:12px; text-align:left;">Health Benefits</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for food in results %}
+            <tr style="border-bottom:1px solid var(--gray-200); background: {% cycle 'var(--green-50)' 'white' %};">
+              <td style="padding:10px;">{{ food.food_name }}</td>
+              <td style="padding:10px; text-align:center;">{{ food.calories_100g }}</td>
+              <td style="padding:10px; text-align:center;">{{ food.protein_100g }}</td>
+              <td style="padding:10px; text-align:center;">{{ food.fat_100g }}</td>
+              <td style="padding:10px; text-align:center;">{{ food.carbs_100g }}</td>
+              <td style="padding:10px;">{{ food.health_benefits }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% elif query %}
+      <p style="text-align:center; margin-top:20px; color:var(--gray-600);">No food found with "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+
+    <!-- Back Link -->
+    <a href="{% url 'main_page' %}" class="back-btn">
+        ⬅ Back to Menu
+    </a>
+  </div>
+
+  <style>
+    .back-btn {
+      display: inline-block;
+      background: #34d399;        /* slightly darker green */
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 2px solid #059669;  /* dark green border */
+      font-weight: 600;
+      transition: all 0.2s ease;
+      margin-top: 24px;
+    }
+
+    .back-btn:hover {
+      background: #10b981;        /* hover color */
+      border-color: #047857;
+    }
+  </style>
+{% endblock %}

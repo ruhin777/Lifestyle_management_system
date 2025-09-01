@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Lifestyle System{% endblock %}</title>
+  <style>
+    :root{
+      --green-900:#064e3b;
+      --green-800:#065f46;
+      --green-700:#047857;
+      --green-600:#059669;
+      --green-500:#10b981;
+      --green-100:#d1fae5;
+      --green-50:#ecfdf5;
+      --white:#ffffff;
+      --gray-700:#374151;
+      --gray-600:#4b5563;
+      --gray-200:#e5e7eb;
+      --shadow:0 10px 20px rgba(0,0,0,.08), 0 6px 6px rgba(0,0,0,.06);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      color:var(--gray-700);
+      background:linear-gradient(180deg,var(--green-50),#fff);
+      min-height:100vh;
+      display:flex;flex-direction:column;
+    }
+    .nav{
+      background:linear-gradient(90deg,var(--green-800),var(--green-600));
+      color:var(--white);
+      padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:10;
+      box-shadow:var(--shadow);
+    }
+    .brand{font-weight:800;letter-spacing:.3px}
+    .nav a{
+      color:var(--white);text-decoration:none;margin-left:16px;
+      padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.25);
+    }
+    .wrap{width:100%;max-width:780px;margin:28px auto;padding:0 16px 40px}
+    .card{
+      background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:26px;border:1px solid var(--green-100);
+    }
+    h1{color:var(--green-800);font-size:28px;margin:0 0 10px}
+    p.lead{color:var(--gray-600);margin-top:0}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    form .row.single{grid-template-columns:1fr}
+    label{display:block;margin:10px 0 6px;color:var(--green-900);font-weight:600}
+    input, select{
+      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--gray-200);
+      outline:none;background:#fff;transition:.2s;
+    }
+    input:focus, select:focus{border-color:var(--green-500);box-shadow:0 0 0 4px var(--green-100)}
+    .btn{
+      display:inline-block;background:linear-gradient(90deg,var(--green-700),var(--green-500));
+      color:#fff;border:none;padding:12px 18px;border-radius:12px;cursor:pointer;
+      font-weight:700;box-shadow:var(--shadow);
+    }
+    .btn:active{transform:translateY(1px)}
+    .muted{font-size:13px;color:var(--gray-600)}
+    .messages{margin:0 0 16px 0;list-style:none;padding:0}
+    .messages li{
+      padding:12px 14px;border-radius:12px;margin-bottom:8px;font-weight:600;
+      border:1px solid var(--green-100);background:var(--green-50);color:var(--green-800);
+    }
+    .footer{margin-top:auto;padding:20px;text-align:center;color:var(--gray-600)}
+    .pill{
+      display:inline-block;background:var(--green-100);color:var(--green-800);
+      padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--green-500, #10b98120);
+    }
+    .help{font-size:12px;color:var(--gray-600);margin-top:6px}
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <nav class="nav">
+    <div class="brand">Lifestyle System</div>
+    <div>
+      <a href="{% url 'register' %}">Register</a>
+      <a href="{% url 'login' %}">Login</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="footer">
+    <span class="pill">Eat better, feel better, live better</span>
+  </footer>
+</body>
+</html>

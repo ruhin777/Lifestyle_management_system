@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Login · Lifestyle System{% endblock %}
+{% block content %}
+  <div class="card">
+    <h1>Welcome back</h1>
+    <p class="lead">Log in with your <strong>User ID</strong> and <strong>Password</strong>.</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="row">
+        <div>
+          <label for="id_user_id">User ID</label>
+          {{ form.user_id }}
+        </div>
+        <div>
+          <label for="id_password">Password</label>
+          {{ form.password }}
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <button class="btn" type="submit">Login</button>
+      </div>
+      <p class="muted" style="margin-top:10px">New here? <a href="{% url 'register' %}">Create an account</a></p>
+    </form>
+  </div>
+{% endblock %}

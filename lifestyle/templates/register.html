@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Register · Lifestyle System{% endblock %}
+{% block content %}
+  <div class="card">
+    <h1>Create your account</h1>
+    <p class="lead">Step 1: enter your <strong>name</strong>, set a <strong>password</strong>, and confirm it.</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="row single">
+        <div>
+          <label for="id_name">Name</label>
+          {{ form.name }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="id_password">Password</label>
+          {{ form.password }}
+        </div>
+        <div>
+          <label for="id_confirm_password">Confirm Password</label>
+          {{ form.confirm_password }}
+        </div>
+      </div>
+
+      {% if form.non_field_errors %}
+        <div class="help">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div style="margin-top:18px">
+        <button class="btn" type="submit">Continue</button>
+      </div>
+      <p class="muted" style="margin-top:10px">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+    </form>
+  </div>
+{% endblock %}
