@@ -1,94 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>BMI & BMR INFORMATION</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, Arial, sans-serif;
-      text-align: center;
-      background: linear-gradient(180deg, #ecfdf5, #d1fae5, #a7f3d0);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+{% extends "base.html" %}
+{% load static %}
+{% block title %}BMI & BMR Information{% endblock %}
 
-    .card {
-      background: #ffffff;
-      padding: 30px 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 128, 0, 0.2);
-      border: 1px solid #bbf7d0;
-      max-width: 420px;
-      width: 100%;
-    }
 
-    h2 {
-      color: #065f46;
-      margin-bottom: 20px;
-      font-size: 26px;
-    }
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
 
-    p {
-      font-size: 18px;
-      color: #064e3b;
-      margin: 12px 0;
-    }
 
-    span.value {
-      color: #047857;
-      font-weight: bold;
-    }
+  <div class="card shadow-lg text-center p-4"
+       style="max-width: 500px; width: 100%; border-radius: 20px; border: 1px solid #bbf7d0; box-shadow: 0 10px 25px rgba(0, 128, 0, 0.2);">
 
-    span.cat {
-      color: #059669;
-      font-weight: 600;
-    }
 
-    .back-btn {
-      display: inline-block;
-      background: #34d399;        /* slightly darker green */
-      color: #ffffff;
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      border: 2px solid #059669;  /* dark green border */
-      font-weight: 600;
-      transition: all 0.2s ease;
-      margin-top: 24px;
-    }
+      <!-- Greeting -->
+      <h2 class="fw-bold mb-3" style="color: #065f46; font-size: 1.9rem;">
+        Hello {{ user.name }}
+      </h2>
 
-    .back-btn:hover {
-      background: #10b981;        /* hover color */
-      border-color: #047857;
-    }
-  </style>
-</head>
-<body>
 
-  <div class="card">
-    <h2>Hello {{ user.name }}</h2>
+      <!-- BMI Chart Image -->
+      <div style="margin-bottom:20px; display:flex; justify-content:center;">
+        <img src="{% static 'images/bmi_chart.jpg' %}" alt="BMI Chart"
+             style="width:70%; border-radius:12px; box-shadow:0 4px 12px rgba(0,128,0,0.2);">
+      </div>
 
-    <p>
-      <b>Your BMI:</b>
-      <span class="value">{{ bmi }}</span>
-      (<span class="cat">{{ bmi_cat }}</span>)
-    </p>
 
-    <p>
-      <b>Your BMR:</b>
-      <span class="value">{{ bmr }}</span>
-    </p>
+      <!-- BMI Info -->
+      <p style="font-size: 1.8rem; color: #064e3b; margin-bottom: 12px;">
+        <b>Your BMI:</b>
+        <span style="color:#047857; font-weight:bold;">{{ bmi }}</span>
+        (<span style="color:#059669; font-weight:600;">{{ bmi_cat }}</span>)
+      </p>
 
-    <!-- Back Link -->
-    <a href="{% url 'main_page' %}" class="back-btn">
-        ⬅ Back to Menu
+
+      <!-- BMR Info -->
+      <p style="font-size: 1.8rem; color: #064e3b;">
+        <b>Your BMR:</b>
+        <span style="color:#047857; font-weight:bold;">{{ bmr }}</span>
+      </p>
+
+
+  <div style="margin-top:25px; text-align:center;">
+    <a href="{% url 'main_page' %}" 
+      class="btn" 
+      style="text-decoration: none; display:inline-block;">
+      ⬅ Back to Menu
     </a>
   </div>
+  </div>
 
-</body>
-</html>
+
+</div>
+{% endblock %}

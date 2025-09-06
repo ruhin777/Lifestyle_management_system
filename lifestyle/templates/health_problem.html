@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Search Health Problems{% endblock %}
+
+
+{% block content %}
+<div class="card">
+    <!-- Title -->
+    <h2 style="text-align:center; color:var(--green-800); display:flex; align-items:center; justify-content:center; gap:8px; font-size:2rem;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966481.png"
+             alt="Health Icon"
+             style="width:28px; height:28px;">
+        Search Health Problems
+    </h2>
+
+
+    <!-- Search form -->
+    <form method="get" style="margin-top:20px; text-align:center;">
+        <input type="text"
+               name="q"
+               placeholder="Enter health problem..."
+               value="{{ query }}"
+               style="padding:14px 18px; font-size:20px; border-radius:8px; width:70%; max-width:500px;">
+       
+        <button type="submit" class="btn"
+                style="margin-left:8px; display:inline-flex; align-items:center; gap:6px; font-size:16px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
+                 alt="Search"
+                 style="width:18px;">
+            Search
+        </button>
+    </form>
+
+
+    {% if results %}
+        <h3 style="margin-top:30px; color:var(--green-700);">Results:</h3>
+        {% for health in results %}
+            <div class="card" style="margin-top:15px;">
+                <h4 style="color:var(--green-800); margin-bottom:8px;">
+                    {{ health.problem_name }}
+                </h4>
+                <p style="color:var(--gray-600);">{{ health.description }}</p>
+                <a href="{% url 'select_h_prob' health.health_id %}"
+                   class="btn"
+                   style="margin-top:10px; display:inline-block;">
+                    ➕ Select this problem
+                </a>
+            </div>
+        {% endfor %}
+    {% elif query %}
+        <p style="margin-top:20px; color:var(--gray-600);">
+            No results found for "<b>{{ query }}</b>"
+        </p>
+    {% endif %}
+<div style="margin-top:25px; text-align:center;">
+  <a href="{% url 'main_page' %}" 
+     class="btn" 
+     style="text-decoration: none; display:inline-block;">
+     ⬅ Back to Menu
+  </a>
+</div>
+</div>
+{% endblock %}

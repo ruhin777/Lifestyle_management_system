@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Daily Calorie Intake · Lifestyle System{% endblock %}
 
+
 {% block content %}
   <div class="card" style="max-width:720px; margin:30px auto; text-align:center; padding:28px;">
     <!-- Header -->
     <h2 style="color:#1b5e20; margin-bottom:6px;">Hello {{ user.name }}</h2>
     <p style="color:#2e7d32; margin-bottom:24px;">Here’s your personalized daily calorie intake</p>
+
 
     <!-- Highlight Daily Calorie Intake -->
     <div style="background:#ffffff; border:3px solid #66bb6a; border-radius:14px; padding:28px; box-shadow:0px 4px 12px rgba(0,0,0,0.1); margin-bottom:24px;">
@@ -20,6 +22,27 @@
         </p>
     </div>
 
+
+    <!-- Macronutrient Breakdown -->
+    <div style="background:#f1f8e9; border:2px solid #81c784; border-radius:14px; padding:24px; box-shadow:0px 3px 10px rgba(0,0,0,0.08); margin-bottom:28px;">
+      <h3 style="color:#1b5e20; margin-bottom:16px;">Macronutrient Targets</h3>
+      <div style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:16px;">
+        <div style="flex:1; min-width:120px; background:#ffffff; border-radius:12px; padding:14px; border:2px solid #a5d6a7;">
+          <p style="margin:0; font-weight:bold; color:#2e7d32;">Protein</p>
+          <p style="margin:4px 0 0; font-size:18px; color:#1b5e20;">{{ macros.protein_g }} g</p>
+        </div>
+        <div style="flex:1; min-width:120px; background:#ffffff; border-radius:12px; padding:14px; border:2px solid #a5d6a7;">
+          <p style="margin:0; font-weight:bold; color:#2e7d32;">Carbs</p>
+          <p style="margin:4px 0 0; font-size:18px; color:#1b5e20;">{{ macros.carbs_g }} g</p>
+        </div>
+        <div style="flex:1; min-width:120px; background:#ffffff; border-radius:12px; padding:14px; border:2px solid #a5d6a7;">
+          <p style="margin:0; font-weight:bold; color:#2e7d32;">Fats</p>
+          <p style="margin:4px 0 0; font-size:18px; color:#1b5e20;">{{ macros.fats_g }} g</p>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Relatable Food Images -->
     <h3 style="color:#1b5e20; margin:0 0 10px;">Balanced Nutrition Examples</h3>
     <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:12px;">
@@ -32,11 +55,17 @@
         These images are just examples of calorie-balanced meals 🍲
     </p>
 
-    <!-- Back Link -->
-    <a href="{% url 'main_page' %}" class="back-btn">
-        ⬅ Back to Menu
-    </a>
+  <div style="margin-top:25px; text-align:center;">
+  <a href="{% url 'main_page' %}" 
+     class="btn" 
+     style="text-decoration: none; display:inline-block;">
+     ⬅ Back to Menu
+  </a>
   </div>
+  
+    
+  </div>
+
 
   <style>
     .back-btn {

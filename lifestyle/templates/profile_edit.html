@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile · Lifestyle System{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Edit Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row single">
+            {{ form.as_p }}
+        </div>
+        <button class="btn" type="submit">Save</button>
+        <a class="btn" href="{% url 'profile' %}" style="margin-left:8px">Cancel</a>
+    </form>
+
+    <!-- Back to Profile Button -->
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="{% url 'profile' %}" class="btn">← Back to Profile</a>
+    </div>
+</div>
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>
+{% endblock %}

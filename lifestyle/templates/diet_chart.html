@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block title %}Diet Chart · Lifestyle System{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--green-100);">
+    <h1>🍽️ Your Personalized Diet Chart</h1>
+    <div style="display: flex; gap: 10px;">
+      <a href="{% url 'regenerate_meal_plan' %}" class="btn" style="text-decoration: none;">🔄 Generate New Plan</a>
+      <a href="{% url 'view_preferences' %}" class="btn" style="text-decoration: none;">📋 View Preferences</a>
+    </div>
+  </div>
+
+  <div style="background: var(--green-50); padding: 15px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid var(--green-100);">
+    <p style="margin: 0; color: var(--green-800);">
+      <strong>Hello, {{ user.name }}!</strong> Your daily calorie target is <strong>{{ user.daily_calories|floatformat:0 }} calories</strong>.
+    </p>
+    <p style="margin: 10px 0 0; font-size: 14px; color: var(--gray-600);">
+      This meal plan is automatically generated based on your health restrictions and food preferences.
+    </p>
+  </div>
+
+  {% if meal_plan %}
+    <!-- Breakfast -->
+    {% if 'Breakfast' in meal_plan and meal_plan|get_item:'Breakfast'|get_item:'foods' %}
+    <div style="background: var(--green-50); padding: 20px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid var(--green-100);">
+      <h2 style="color: var(--green-800); margin: 0 0 15px 0; display: flex; align-items: center;">
+        🍳 Breakfast
+        <span style="margin-left: auto; font-size: 16px; color: var(--green-700);">
+          {{ meal_plan|get_item:'Breakfast'|get_item:'total_calories' }} cal
+        </span>
+      </h2>
+      
+      {% for food_item in meal_plan|get_item:'Breakfast'|get_item:'foods' %}
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--green-100);">
+        <div style="flex: 1;">
+          <strong style="color: var(--green-900);">{{ food_item.food.food_name }}</strong>
+          <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+            Portion: {{ food_item.portion_size }}g · 
+            Protein: {{ food_item.food.protein_100g|floatformat:1 }}g · 
+            Carbs: {{ food_item.food.carbs_100g|floatformat:1 }}g · 
+            Fat: {{ food_item.food.fat_100g|floatformat:1 }}g
+          </div>
+        </div>
+        <div style="font-weight: bold; color: var(--green-700);">
+          {{ food_item.calories }} cal
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Lunch -->
+    {% if 'Lunch' in meal_plan and meal_plan|get_item:'Lunch'|get_item:'foods' %}
+    <div style="background: var(--green-50); padding: 20px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid var(--green-100);">
+      <h2 style="color: var(--green-800); margin: 0 0 15px 0; display: flex; align-items: center;">
+        🍲 Lunch
+        <span style="margin-left: auto; font-size: 16px; color: var(--green-700);">
+          {{ meal_plan|get_item:'Lunch'|get_item:'total_calories' }} cal
+        </span>
+      </h2>
+      
+      {% for food_item in meal_plan|get_item:'Lunch'|get_item:'foods' %}
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--green-100);">
+        <div style="flex: 1;">
+          <strong style="color: var(--green-900);">{{ food_item.food.food_name }}</strong>
+          <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+            Portion: {{ food_item.portion_size }}g · 
+            Protein: {{ food_item.food.protein_100g|floatformat:1 }}g · 
+            Carbs: {{ food_item.food.carbs_100g|floatformat:1 }}g · 
+            Fat: {{ food_item.food.fat_100g|floatformat:1 }}g
+          </div>
+        </div>
+        <div style="font-weight: bold; color: var(--green-700);">
+          {{ food_item.calories }} cal
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Snack -->
+    {% if 'Snack' in meal_plan and meal_plan|get_item:'Snack'|get_item:'foods' %}
+    <div style="background: var(--green-50); padding: 20px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid var(--green-100);">
+      <h2 style="color: var(--green-800); margin: 0 0 15px 0; display: flex; align-items: center;">
+        🥗 Snack
+        <span style="margin-left: auto; font-size: 16px; color: var(--green-700);">
+          {{ meal_plan|get_item:'Snack'|get_item:'total_calories' }} cal
+        </span>
+      </h2>
+      
+      {% for food_item in meal_plan|get_item:'Snack'|get_item:'foods' %}
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--green-100);">
+        <div style="flex: 1;">
+          <strong style="color: var(--green-900);">{{ food_item.food.food_name }}</strong>
+          <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+            Portion: {{ food_item.portion_size }}g · 
+            Protein: {{ food_item.food.protein_100g|floatformat:1 }}g · 
+            Carbs: {{ food_item.food.carbs_100g|floatformat:1 }}g · 
+            Fat: {{ food_item.food.fat_100g|floatformat:1 }}g
+          </div>
+        </div>
+        <div style="font-weight: bold; color: var(--green-700);">
+          {{ food_item.calories }} cal
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Dinner -->
+    {% if 'Dinner' in meal_plan and meal_plan|get_item:'Dinner'|get_item:'foods' %}
+    <div style="background: var(--green-50); padding: 20px; border-radius: var(--radius); margin-bottom: 20px; border: 1px solid var(--green-100);">
+      <h2 style="color: var(--green-800); margin: 0 0 15px 0; display: flex; align-items: center;">
+        🍽️ Dinner
+        <span style="margin-left: auto; font-size: 16px; color: var(--green-700);">
+          {{ meal_plan|get_item:'Dinner'|get_item:'total_calories' }} cal
+        </span>
+      </h2>
+      
+      {% for food_item in meal_plan|get_item:'Dinner'|get_item:'foods' %}
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--green-100);">
+        <div style="flex: 1;">
+          <strong style="color: var(--green-900);">{{ food_item.food.food_name }}</strong>
+          <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+            Portion: {{ food_item.portion_size }}g · 
+            Protein: {{ food_item.food.protein_100g|floatformat:1 }}g · 
+            Carbs: {{ food_item.food.carbs_100g|floatformat:1 }}g · 
+            Fat: {{ food_item.food.fat_100g|floatformat:1 }}g
+          </div>
+        </div>
+        <div style="font-weight: bold; color: var(--green-700);">
+          {{ food_item.calories }} cal
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div style="background: var(--green-100); padding: 20px; border-radius: var(--radius); text-align: center; border: 1px solid var(--green-200); margin-bottom: 20px;">
+      <h3 style="color: var(--green-900); margin: 0;">
+        Total calorie for today: <span style="color: var(--green-700);">{{ total_calories }} calories</span>
+      </h3>
+      <p style="margin: 10px 0 0; color: var(--gray-600); font-size: 14px;">
+        Daily target: {{ user.daily_calories|floatformat:0 }} calories
+      </p>
+      {% if user.daily_calories > 0 %}
+      <p style="margin: 5px 0 0; color: var(--gray-600); font-size: 14px;">
+        {% widthratio total_calories user.daily_calories 100 as progress %}
+        {{ progress|floatformat:0 }}% of daily target
+      </p>
+      {% endif %}
+    </div>
+
+    <!-- Back to Menu Button -->
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="{% url 'main_page' %}" class="btn" style="text-decoration: none;">← Back to Menu</a>
+    </div>
+
+  {% else %}
+    <div style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 48px; margin-bottom: 20px;">🍽️</div>
+      <h2 style="color: var(--green-800);">No meal plan generated yet</h2>
+      <p style="color: var(--gray-600); margin-bottom: 20px;">Generate your personalized meal plan based on your preferences and restrictions.</p>
+      <a href="{% url 'regenerate_meal_plan' %}" class="btn" style="text-decoration: none;">Generate Meal Plan</a>
+      <div style="margin-top: 20px;">
+        <a href="{% url 'main_page' %}" class="btn" style="text-decoration: none;">← Back to Menu</a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

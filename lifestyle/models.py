@@ -1,12 +1,13 @@
 from django.db import models
 import re
-from django.db.models import Max   # ✅ add this
+from django.db.models import Max   
 
 
 class User(models.Model):
     user_id = models.CharField(primary_key=True, max_length=100)
     name = models.CharField(max_length=100)
-    password = models.CharField(unique=True, max_length=100)  # unique enforced
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)  # unique enforced
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
     height = models.DecimalField(max_digits=4, decimal_places=3)  # meters
@@ -59,6 +60,7 @@ class Dietplan(models.Model):
     total_calories = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     foods = models.ManyToManyField("FoodNutrition", through="Includes")
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
         managed = False
@@ -75,6 +77,9 @@ class Exercise(models.Model):
     calories_burned_per_hour = models.FloatField()
     benefits = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+        # BMI suitability
+    min_bmi = models.FloatField(default=0)
+    max_bmi = models.FloatField(default=100)
 
     class Meta:
         managed = False
@@ -146,8 +151,9 @@ class FoodRestriction(models.Model):
 
 
 class Affects(models.Model):
-    food_restriction = models.ForeignKey(FoodRestriction, on_delete=models.CASCADE)
-    food = models.ForeignKey(FoodNutrition, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)   # new PK from DB
+    food_restriction = models.ForeignKey(FoodRestriction, on_delete=models.CASCADE, db_column="food_restriction_id")
+    food = models.ForeignKey(FoodNutrition, on_delete=models.CASCADE, db_column="food_id")
 
     class Meta:
         managed = False
@@ -159,8 +165,9 @@ class Affects(models.Model):
 
 
 class AppliesTo(models.Model):
-    exercise_restriction = models.ForeignKey(ExerciseRestriction, on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    exercise_restriction = models.ForeignKey(ExerciseRestriction, on_delete=models.CASCADE, db_column="exercise_restriction_id")
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, db_column="exercise_id")
 
     class Meta:
         managed = False
@@ -172,8 +179,9 @@ class AppliesTo(models.Model):
 
 
 class Includes(models.Model):
-    diet_plan = models.ForeignKey(Dietplan, on_delete=models.CASCADE)
-    food = models.ForeignKey(FoodNutrition, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    diet_plan = models.ForeignKey(Dietplan, on_delete=models.CASCADE, db_column="diet_plan_id")
+    food = models.ForeignKey(FoodNutrition, on_delete=models.CASCADE, db_column="food_id")
 
     class Meta:
         managed = False
@@ -185,8 +193,9 @@ class Includes(models.Model):
 
 
 class SuffersFrom(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    health = models.ForeignKey(HealthProblem, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column="user_id")
+    health = models.ForeignKey(HealthProblem, on_delete=models.CASCADE, db_column="health_id")
 
     class Meta:
         managed = False
@@ -196,5 +205,30 @@ class SuffersFrom(models.Model):
     def __str__(self):
         return f"{self.user} -> {self.health}"
 
+
+class FoodPreference(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    food = models.ForeignKey(FoodNutrition, on_delete=models.CASCADE)
+    allowed = models.BooleanField(default=True)  # if restricted but user insists
+
+    class Meta:
+        db_table = 'food_preference'
+
+    def __str__(self):
+        return f"{self.user.name} -> {self.food.food_name}"
+
+
+class ExercisePreference(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    allowed = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'exercise_preference'
+
+    def __str__(self):
+        return f"{self.user.name} -> {self.exercise.exercise_name}"
 
 # Create your models here.

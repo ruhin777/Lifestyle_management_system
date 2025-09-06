@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Exercise Recommendations{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>Exercise Recommendations for {{ user.name }}</h1>
+
+  {% if exercises %}
+    <table style="width:100%;border-collapse:collapse;margin-top:20px;">
+      <thead>
+        <tr style="background-color:var(--green-100);color:var(--green-900);text-align:left;">
+          <th style="padding:12px;border:1px solid var(--green-100);">Exercise Name</th>
+          <th style="padding:12px;border:1px solid var(--green-100);">Type</th>
+          <th style="padding:12px;border:1px solid var(--green-100);">Calories Burned per Hour</th>
+          <th style="padding:12px;border:1px solid var(--green-100);">Benefits</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exercise in exercises %}
+        <tr style="border:1px solid var(--green-100);">
+          <td style="padding:12px;">{{ exercise.exercise_name }}</td>
+          <td style="padding:12px;">{{ exercise.type }}</td>
+          <td style="padding:12px;">{{ exercise.calories_burned_per_hour }}</td>
+          <td style="padding:12px;color:var(--green-800);font-style:italic;">{{ exercise.benefits }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No exercises found for your profile.</p>
+  {% endif %}
+  <div style="margin-top:25px; text-align:center;">
+    <a href="{% url 'main_page' %}" 
+      class="btn" 
+      style="text-decoration: none; display:inline-block;">
+      ⬅ Back to Menu
+    </a>
+  </div>
+
+</div>
+{% endblock %}

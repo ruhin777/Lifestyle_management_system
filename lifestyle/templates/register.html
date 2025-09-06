@@ -3,7 +3,7 @@
 {% block content %}
   <div class="card">
     <h1>Create your account</h1>
-    <p class="lead">Step 1: enter your <strong>name</strong>, set a <strong>password</strong>, and confirm it.</p>
+    <p class="lead">Step 1: enter your <strong>name</strong>, <strong>email</strong>, set a <strong>password</strong>, and confirm it.</p>
 
     <form method="post" novalidate>
       {% csrf_token %}
@@ -11,6 +11,13 @@
         <div>
           <label for="id_name">Name</label>
           {{ form.name }}
+        </div>
+      </div>
+
+      <div class="row single">
+        <div>
+          <label for="id_email">Email</label>
+          {{ form.email }}
         </div>
       </div>
 

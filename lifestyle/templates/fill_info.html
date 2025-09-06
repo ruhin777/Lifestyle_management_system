@@ -3,40 +3,35 @@
 {% block content %}
   <div class="card">
     <h1>Complete your profile</h1>
-    <p class="lead">Step 2: enter your details. We’ll save everything <strong>together</strong> in the database.</p>
+    <p class="lead">Step 2: enter your details to complete your <strong>registration</strong> and save it. </p>
 
     <form method="post" novalidate>
       {% csrf_token %}
       <div class="row">
         <div>
-          <label for="id_name">Name</label>
-          {{ form.name }}
-          <div class="help">If needed, you can adjust your name here before saving.</div>
-        </div>
-        <div>
           <label for="id_gender">Gender</label>
           {{ form.gender }}
         </div>
-      </div>
-
-      <div class="row">
         <div>
           <label for="id_age">Age</label>
           {{ form.age }}
         </div>
+      </div>
+
+      <div class="row">
         <div>
           <label for="id_height">Height (in m)</label>
           {{ form.height }}
           <div class="help">Enter your height in meters (e.g., 1.70).</div>
         </div>
-      </div>
-
-      <div class="row">
         <div>
           <label for="id_weight">Weight (in kg)</label>
           {{ form.weight }}
           <div class="help">Enter your weight in kilograms (e.g., 65).</div>
         </div>
+      </div>
+
+      <div class="row">
         <div>
           <label for="id_activity_level">Activity Level</label>
           {{ form.activity_level }}

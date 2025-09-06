@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My Exercises · Lifestyle System{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>My Exercises</h1>
+    {% if prefs %}
+    <ul style="list-style:none;padding:0;margin:0">
+        {% for pref in prefs %}
+        <li
+            style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+            <div>
+                <strong>{{ pref.exercise.exercise_name }}</strong>
+                <div class="muted">Type: {{ pref.exercise.type }} • Allowed: {{ pref.allowed|yesno:"Yes,No" }}</div>
+            </div>
+            <form method="post" style="margin:0">
+                {% csrf_token %}
+                <button class="btn" type="submit" name="delete_exercise_pref" value="{{ pref.id }}">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No exercises in your list yet.</p>
+    {% endif %}
+
+    <!-- Back to Profile Button -->
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="{% url 'profile' %}" class="btn">← Back to Profile</a>
+    </div>
+
+</div>
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>
+{% endblock %}

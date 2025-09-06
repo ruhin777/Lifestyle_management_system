@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Meal Plans · Lifestyle System{% endblock %}
+
+
+{% block content %}
+<div class="card">
+    <h1>Meal Plans</h1>
+
+
+    <form method="get" class="row single" style="margin-bottom:12px">
+        <label for="date">Filter by date (YYYY-MM-DD)</label>
+        <input type="text" id="date" name="date" value="{{ q_date }}">
+        <button class="btn" type="submit" style="margin-top:12px">Filter</button>
+    </form>
+
+
+    {% if plans %}
+    <ul style="list-style:none;padding:0;margin:0">
+        {% for p in plans %}
+        <li style="border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+            <div>
+                <strong>{{ p.date }} — {{ p.meal }}</strong>
+                <span class="muted">({{ p.total_calories }} kcal)</span>
+            </div>
+
+
+            <div class="muted" style="margin-top:6px">
+                Foods:
+                {% for f in p.foods.all %}
+                <span class="pill" style="margin-right:6px">{{ f.food_name }}</span>
+                <!-- ✅ Remove button for this food in this meal -->
+                <form method="post" style="display:inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan_id" value="{{ p.diet_plan_id }}">
+                    <input type="hidden" name="food_id" value="{{ f.food_id }}">
+                    <input type="hidden" name="q_date" value="{{ q_date }}">
+                    <button type="submit" name="remove_food" value="1" class="link-btn"
+                        title="Remove from this meal">×</button>
+                </form>
+                {% empty %}
+                <span class="muted">No foods listed.</span>
+                {% endfor %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">No meal plans found.</p>
+    {% endif %}
+
+    <!-- Back to Profile Button -->
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="{% url 'profile' %}" class="btn">← Back to Profile</a>
+    </div>
+
+</div>
+
+
+<style>
+    /* small red close button */
+    .link-btn {
+        background: none;
+        border: none;
+        padding: 0 6px;
+        color: #b91c1c;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+  a {
+    text-decoration: none;
+  }
+
+</style>
+{% endblock %}

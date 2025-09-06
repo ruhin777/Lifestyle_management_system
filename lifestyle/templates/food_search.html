@@ -48,11 +48,14 @@
     {% elif query %}
       <p style="text-align:center; margin-top:20px; color:var(--gray-600);">No food found with "<strong>{{ query }}</strong>"</p>
     {% endif %}
+  <div style="margin-top:25px; text-align:center;">
+  <a href="{% url 'main_page' %}" 
+     class="btn" 
+     style="text-decoration: none; display:inline-block;">
+     ⬅ Back to Menu
+  </a>
+  </div>
 
-    <!-- Back Link -->
-    <a href="{% url 'main_page' %}" class="back-btn">
-        ⬅ Back to Menu
-    </a>
   </div>
 
   <style>

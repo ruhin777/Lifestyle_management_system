@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}My Preferences · Lifestyle System{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--green-100);">
+    <h1>📋 Your Food Preferences</h1>
+    <div>
+      <a href="{% url 'generate_diet_chart' %}" class="btn" style="margin-right: 10px; text-decoration: none;">← Back to Diet Chart</a>
+      <a href="{% url 'user_preferences' %}" class="btn" style="text-decoration: none;">✏️ Edit Preferences</a>
+    </div>
+  </div>
+
+  <p style="color: var(--gray-600); margin-bottom: 20px;">
+    These preferences are used to generate your personalized meal plans.
+  </p>
+
+  {% if preferences %}
+    {% for preference in preferences %}
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--green-100);">
+      <div style="flex: 1;">
+        <strong style="color: var(--green-900);">{{ preference.food.food_name }}</strong>
+        <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+          Calories: {{ preference.food.calories_100g }} per 100g · 
+          Protein: {{ preference.food.protein_100g }}g · 
+          Carbs: {{ preference.food.carbs_100g }}g · 
+          Fat: {{ preference.food.fat_100g }}g
+        </div>
+      </div>
+      <span style="padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 13px; 
+                  {% if preference.allowed %}background: var(--green-100); color: var(--green-800); border: 1px solid var(--green-300);
+                  {% else %}background: #fee2e2; color: #dc2626; border: 1px solid #fecaca;{% endif %}">
+        {% if preference.allowed %}✅ Allowed{% else %}❌ Avoided{% endif %}
+      </span>
+    </div>
+    {% endfor %}
+
+    <!-- Back to Menu Button -->
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="{% url 'main_page' %}" class="btn" style="text-decoration: none;">← Back to Menu</a>
+    </div>
+
+  {% else %}
+    <div style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 48px; margin-bottom: 20px;">📋</div>
+      <h2 style="color: var(--green-800);">No preferences set yet</h2>
+      <p style="color: var(--gray-600); margin-bottom: 20px;">
+        You haven't set any food preferences yet. Set your preferences to get personalized meal recommendations.
+      </p>
+      <a href="{% url 'user_preferences' %}" class="btn" style="text-decoration: none;">Set Preferences</a>
+      <div style="margin-top: 20px;">
+        <a href="{% url 'main_page' %}" class="btn" style="text-decoration: none;">← Back to Menu</a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

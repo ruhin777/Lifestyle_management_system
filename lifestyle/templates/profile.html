@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Profile · Lifestyle System{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>👤 {{ user_obj.name }}</h1>
+    <p class="lead">{{ user_obj.email }}</p>
+
+    <div class="row single" style="gap:12px">
+        <div><span class="pill">Age: {{ user_obj.age }}</span></div>
+        <div><span class="pill">Gender: {{ user_obj.gender }}</span></div>
+        <div><span class="pill">Height: {{ user_obj.height }} m</span></div>
+        <div><span class="pill">Weight: {{ user_obj.weight }} kg</span></div>
+        <div><span class="pill">Activity Level: {{ user_obj.get_activity_level_display }}</span></div>
+    </div>
+
+    <div class="btnbar" style="margin-top:16px">
+        <a href="{% url 'profile_edit' %}" class="btn btn--clean">Edit Info</a>
+        <a href="{% url 'profile_password' %}" class="btn btn--clean">Change Password</a>
+    </div>
+
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--gray-200)" />
+
+    <div class="row">
+        <div class="card" style="padding:16px">
+            <h3 style="margin:0 0 6px">Meal Plans</h3>
+            <p class="muted">You have {{ meal_count }} plans.</p>
+            <a href="{% url 'profile_meal_plans' %}" class="btn btn--clean">View</a>
+        </div>
+        <div class="card" style="padding:16px">
+            <h3 style="margin:0 0 6px">My Exercises</h3>
+            <p class="muted">{{ ex_pref_count }} saved/recommended.</p>
+            <a href="{% url 'profile_exercises' %}" class="btn btn--clean">Manage</a>
+        </div>
+        <div class="card" style="padding:16px">
+            <h3 style="margin:0 0 6px">Health Problems</h3>
+            <p class="muted">View and manage your health problems.</p>
+            <a href="{% url 'profile_health' %}" class="btn btn--clean">View</a>
+        </div>
+    </div>
+
+    <!-- Back to Menu Button -->
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="{% url 'main_page' %}" class="btn">← Back to Menu</a>
+    </div>
+</div>
+
+<style>
+    /* Flat/clean buttons */
+    .btn.btn--clean {
+        box-shadow: none !important;
+        border: 0 !important;
+        margin: 0 !important;
+        vertical-align: middle;
+        transform: none !important;
+    }
+
+    .btnbar .btn+.btn {
+        margin-left: 8px !important;
+    }
+
+    .btn.btn--clean:hover {
+        box-shadow: none !important;
+        filter: brightness(0.98);
+    }
+
+    /* Remove underline from all links in this page */
+    a {
+        text-decoration: none;
+    }
+</style>
+{% endblock %}

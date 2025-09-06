@@ -7,22 +7,6 @@
     <p class="lead">Choose a feature to explore:</p>
 
     <div class="features-grid">
-      <!-- Food Search -->
-      <a href="{% url 'food_search' %}" class="feature-link">
-        <div class="feature-box">
-          <h2>🥦 Food Search</h2>
-          <p>Find nutrition details of foods.</p>
-        </div>
-      </a>
-
-      <!-- Daily Tip -->
-      <a href="{% url 'daily_tip' %}" class="feature-link">
-        <div class="feature-box">
-          <h2>🌿 Daily Health Tip</h2>
-          <p>Get a helpful tip for a healthy lifestyle.</p>
-        </div>
-      </a>
-
       <!-- BMI & BMR -->
       <a href="{% url 'bmi_bmr' %}" class="feature-link">
         <div class="feature-box">
@@ -38,6 +22,63 @@
           <p>See your recommended intake.</p>
         </div>
       </a>
+
+      <!-- Food Search -->
+      <a href="{% url 'food_search' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>🥦 Food Search</h2>
+          <p>Find nutrition details of foods.</p>
+        </div>
+      </a>
+
+      <!-- Health Problems & Restrictions -->
+      <a href="{% url 'health_problem' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>⚕️ Health Problems</h2>
+          <p>Search and select your health problems to find food & exercise restrictions.</p>
+        </div>
+      </a>
+
+      <!-- Your Preferences -->
+      <a href="{% url 'user_preferences' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>📋 Your Preferences</h2>
+          <p>Pick favorite foods & exercises, see restriction warnings if exists.</p>
+        </div>
+      </a>
+
+      <!-- Diet Chart -->
+      <a href="{% url 'generate_diet_chart' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>🍽️ Diet Chart</h2>
+          <p>Generate personalized meal plans based on your preferences.</p>
+        </div>
+      </a>
+
+      <!-- Exercise Recommendations -->
+      <a href="{% url 'exercise_recommendations' user.user_id %}" class="feature-link">
+        <div class="feature-box">
+          <h2>💪 Exercise Recommendations</h2>
+          <p>Personalized exercises based on your BMI & health restrictions.</p>
+        </div>
+      </a>
+
+      <!-- Manage Profile -->
+      <a href="{% url 'profile' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>👤 Manage Your Profile</h2>
+          <p>Update your account details & manage health problems, meal plans & exercises.</p>
+        </div>
+      </a>
+
+      <!-- Daily Tip -->
+      <a href="{% url 'daily_tip' %}" class="feature-link">
+        <div class="feature-box">
+          <h2>🌿 Daily Health Tip</h2>
+          <p>Get a helpful tip for a healthy lifestyle.</p>
+        </div>
+      </a>
+
     </div>
   </div>
 
@@ -64,7 +105,7 @@
       box-shadow: var(--shadow);
       text-align: center;
       color: var(--green-800);
-      min-height: 160px; /* uniform height */
+      min-height: 160px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 

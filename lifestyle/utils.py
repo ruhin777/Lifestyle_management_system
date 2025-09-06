@@ -1,3 +1,6 @@
+from .models import Exercise, SuffersFrom, AppliesTo
+
+
 def to_float(x):
     return float(x) if x is not None else None
 
@@ -29,3 +32,17 @@ def calculate_bmr(weight, height, age, gender):
     else:
         bmr = 447.6 + (9.2 * w) + (3.1 * h * 100) - (4.3 * int(age))
     return round(bmr, 2)
+
+
+from functools import wraps
+from django.shortcuts import redirect
+
+
+def custom_login_required(viewfunc):
+    @wraps(viewfunc)
+    def _wrapped(request, *args, **kwargs):
+        if not request.session.get("user_id"):
+            # optional: preserve ?next=...
+            return redirect("login")
+        return viewfunc(request, *args, **kwargs)
+    return _wrapped

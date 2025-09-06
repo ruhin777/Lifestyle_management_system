@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}User Preferences · Lifestyle System{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>User Preferences</h1>
+  <p class="lead">Search foods and exercises, add them to your preferences, and manage your saved list.</p>
+
+  {# optional warning passed by the view #}
+  {% if warning %}
+    <ul class="messages">
+      <li>{{ warning }}</li>
+    </ul>
+  {% endif %}
+
+  <div class="row single" style="gap:20px">
+    {# Food search form (POST includes ONLY food_search) #}
+    <form action="{% url 'user_preferences' %}" method="post" class="card" style="padding:16px;margin:0">
+      {% csrf_token %}
+      <label for="food_search">Search Food</label>
+      <input id="food_search" name="food_search" type="text" placeholder="e.g., Oats, Banana, Chicken" />
+      <p class="help">Type a food name and press the button.</p>
+      <div style="margin-top:12px">
+        <button class="btn" type="submit">Search Foods</button>
+      </div>
+    </form>
+
+    {# Exercise search form (POST includes ONLY exercise_search) #}
+    <form action="{% url 'user_preferences' %}" method="post" class="card" style="padding:16px;margin:0">
+      {% csrf_token %}
+      <label for="exercise_search">Search Exercise</label>
+      <input id="exercise_search" name="exercise_search" type="text" placeholder="e.g., Squats, Jogging, Yoga" />
+      <p class="help">Type an exercise name and press the button.</p>
+      <div style="margin-top:12px">
+        <button class="btn" type="submit">Search Exercises</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{# Food search results #}
+{% if foods is not None %}
+<div class="card" style="margin-top:16px">
+  <h2 style="margin:0 0 10px;color:var(--green-800)">Food Results</h2>
+  {% if foods %}
+    <ul style="list-style:none;padding:0;margin:0">
+      {% for food in foods %}
+        <li style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div><strong>{{ food.food_name }}</strong></div>
+          <form action="{% url 'user_preferences' %}" method="post" style="margin:0">
+            {% csrf_token %}
+            <input type="hidden" name="food_id" value="{{ food.pk }}">
+            <button class="btn" type="submit" name="add_food" value="1">Add</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No foods matched your search.</p>
+  {% endif %}
+</div>
+{% endif %}
+
+{# Exercise search results #}
+{% if exercises is not None %}
+<div class="card" style="margin-top:16px">
+  <h2 style="margin:0 0 10px;color:var(--green-800)">Exercise Results</h2>
+  {% if exercises %}
+    <ul style="list-style:none;padding:0;margin:0">
+      {% for ex in exercises %}
+        <li style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div><strong>{{ ex.exercise_name }}</strong></div>
+          <form action="{% url 'user_preferences' %}" method="post" style="margin:0">
+            {% csrf_token %}
+            <input type="hidden" name="exercise_id" value="{{ ex.pk }}">
+            <button class="btn" type="submit" name="add_exercise" value="1">Add</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No exercises matched your search.</p>
+  {% endif %}
+</div>
+{% endif %}
+
+{# Saved preferences #}
+<div class="card" style="margin-top:16px">
+  <h2 style="margin:0 0 10px;color:var(--green-800)">Saved Foods</h2>
+  {% if saved_foods %}
+    <ul style="list-style:none;padding:0;margin:0">
+      {% for pref in saved_foods %}
+        <li style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div><strong>{{ pref.food.food_name }}</strong></div>
+          <form action="{% url 'user_preferences' %}" method="post" style="margin:0">
+            {% csrf_token %}
+            <button class="btn" type="submit" name="delete_food" value="{{ pref.id }}">Remove</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">You haven't saved any foods yet.</p>
+  {% endif %}
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h2 style="margin:0 0 10px;color:var(--green-800)">Saved Exercises</h2>
+  {% if saved_exercises %}
+    <ul style="list-style:none;padding:0;margin:0">
+      {% for pref in saved_exercises %}
+        <li style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--gray-200);border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div><strong>{{ pref.exercise.exercise_name }}</strong></div>
+          <form action="{% url 'user_preferences' %}" method="post" style="margin:0">
+            {% csrf_token %}
+            <button class="btn" type="submit" name="delete_exercise" value="{{ pref.id }}">Remove</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">You haven't saved any exercises yet.</p>
+  {% endif %}
+<div style="margin-top:25px; text-align:center;">
+  <a href="{% url 'main_page' %}" 
+     class="btn" 
+     style="text-decoration: none; display:inline-block;">
+     ⬅ Back to Menu
+  </a>
+</div>
+</div>
+{% endblock %}
