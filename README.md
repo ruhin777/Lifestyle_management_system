@@ -80,7 +80,9 @@ cd Lifestyle_management_system
 2. Create Virtual Environment
 
 python -m venv venv
+
 venv\Scripts\activate   # On Windows
+
 source venv/bin/activate  # On Mac/Linux
 
 3. Install Dependencies
@@ -91,17 +93,14 @@ pip install django==4.1 mysqlclient==2.2.0
 
 Start Apache and MySQL from the XAMPP Control Panel.
 
-
 Open http://localhost/phpmyadmin in your browser.
-
 
 Click on Import from the top menu.
 
-
 Choose the file lifestyle_management.sql
 
-
 Click Go.
+
 6. Run migrations 
 
 python manage.py migrate
@@ -109,16 +108,21 @@ python manage.py migrate
 7. Create superuser (for Django admin only)
 
 python manage.py createsuperuser
+
 8. Run the server
 
 python manage.py runserver
 
 9. Navigate the Application
+    
 Open: http://127.0.0.1:8000/
+
 Visit /admin/ → login with superuser to manage data.
+
 Users register/login via the welcome page (custom User table).
 
 Notes:
+
 Database import is mandatory for full feature access
 Admins can add new food items, exercises, or health problems through Django Admin (/admin/).
 After logging in, users land on the Main Page where they can navigate the features.
